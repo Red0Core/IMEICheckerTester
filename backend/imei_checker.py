@@ -29,8 +29,42 @@ class IMEI(BaseModel):
         
         return (10 - (checksum % 10)) % 10 # Контрольная цифра
 
+
 def get_imei_info(imei: IMEI) -> dict:
     # Временное решение для тестов
+    return mock_get_imei_info(imei)
+
+def mock_get_imei_info(imei: IMEI) -> dict:
+    """Пример ответа API imeicheck.net"""
     return {
-        "imei": imei.imei
+        "id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+        "type": "api",
+        "status": "successful",
+        "orderId": "",
+        "service": {
+            "id": 1,
+            "title": "Apple Basic Info"
+        },
+        "amount": "0.14",
+        "deviceId": "123456789012345",
+        "processedAt": 41241252112,
+        "properties": {
+            "deviceName": "iPhone 11 Pro",
+            "image": "https://sources.imeicheck.net/image.jpg",
+            "imei": "123456789012345",
+            "estPurchaseDate": 1422349078,
+            "simLock": True,
+            "warrantyStatus": "AppleCare Protection Plan",
+            "repairCoverage": "false",
+            "technicalSupport": "false",
+            "modelDesc": "IPHONE 12 BLACK 64GB-JPN",
+            "demoUnit": True,
+            "refurbished": True,
+            "purchaseCountry": "Thailand",
+            "apple/region": "AT&T USA",
+            "fmiOn": True,
+            "lostMode": "false",
+            "usaBlockStatus": "Clean",
+            "network": "Global"
+        }
     }

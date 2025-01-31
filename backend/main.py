@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import auth
+from .routers import auth, imei
 
 app = FastAPI()
 
@@ -22,3 +22,4 @@ app.add_middleware(
 )
 
 app.include_router(auth.router, tags=['Authentication'], prefix="/api")
+app.include_router(imei.router, tags=["IMEI"], prefix="/api")
