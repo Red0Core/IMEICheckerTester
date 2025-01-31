@@ -11,6 +11,7 @@ pip install -r requirements.txt
 
 ### 2️⃣ Настроить `.env`
 - Переименуйте `.env.example` в `.env` и укажите нужные параметры:
+- Удостоверьтесь, что путь до вашей sqlite3 базы существует!
 ```ini
 DATABASE_URL="your-database-url-sqlite"
 TOKEN_BOT="your-telegram-bot-token"
