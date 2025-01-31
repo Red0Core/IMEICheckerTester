@@ -1,5 +1,9 @@
 import httpx
 from pydantic import BaseModel, field_validator, Field
+import os
+from logger import logger
+
+API_KEY_IMEI = os.getenv("API_KEY_IMEI")
 
 class IMEI(BaseModel):
     imei: str = Field(..., min_length=15, max_length=15)
@@ -30,9 +34,33 @@ class IMEI(BaseModel):
         return (10 - (checksum % 10)) % 10 # Контрольная цифра
 
 
-def get_imei_info(imei: IMEI) -> dict:
-    # Временное решение для тестов
-    return mock_get_imei_info(imei)
+async def get_imei_info(imei: IMEI) -> dict:
+    url = "https://api.imeicheck.net/v1/checks"
+
+    payload = {
+        "deviceId": imei.imei,
+        "serviceId": 12
+    }
+    headers = {
+        'Authorization': f'Bearer {API_KEY_IMEI}',
+        'Accept-Language': 'en',
+    }
+
+    async with httpx.AsyncClient() as client:
+        response = await client.post(url, headers=headers, data=payload)
+
+        if response.status_code == 201:
+            logger.info(response.json())
+            return response.json()
+        else:
+            out = dict()
+            message = response.json().get('message', None)
+            if message is not None:
+                out['errors'] = message
+            else:
+                out = response.json()
+            logger.exception(out)
+            return out
 
 def mock_get_imei_info(imei: IMEI) -> dict:
     """Пример ответа API imeicheck.net"""

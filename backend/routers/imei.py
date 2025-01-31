@@ -13,4 +13,4 @@ router = APIRouter()
         description="Проверяет через сервис imeicheck.net IMEI пользователя"
     )
 async def check_imei(imei: IMEI, user: User = Depends(get_current_user)):
-    return get_imei_info(imei)
+    return await get_imei_info(imei)
