@@ -68,7 +68,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 def create_refresh_token(user_id: int):
-    expire = datetime.now() + timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
+    expire = datetime.now(timezone.utc) + timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
     payload = {"sub": str(user_id), "exp": expire}
     token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
     return token, expire
@@ -163,7 +163,7 @@ async def refresh_access_token(refresh_token: RefreshTokenRequest, db: Session =
         # Проверяем, есть ли такой refresh_token в базе данных
         refresh_token_record = db.query(database.RefreshToken).filter(
             database.RefreshToken.token == refresh_token.refresh_token,
-            database.RefreshToken.expires_at > datetime.now()
+            database.RefreshToken.expires_at > datetime.now(timezone.utc)
         ).first()
         if not refresh_token_record:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or expired refresh token")

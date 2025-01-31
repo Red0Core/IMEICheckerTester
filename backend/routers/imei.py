@@ -1,10 +1,15 @@
 from fastapi import Depends, APIRouter
-from database import get_db, User
-from sqlalchemy.orm import Session
+from pydantic import BaseModel
+from database import User
 from .auth import get_current_user
 from services.imei_checker import IMEI, get_imei_info
 
 router = APIRouter()
+
+class IMEIResponse(BaseModel):
+    status: str
+    data: dict | None = None
+    error: str | None = None
 
 @router.post(
         "/check-imei",
@@ -12,5 +17,9 @@ router = APIRouter()
         summary="Информация о IMEI",
         description="Проверяет через сервис imeicheck.net IMEI пользователя"
     )
-async def check_imei(imei: IMEI, user: User = Depends(get_current_user)):
-    return await get_imei_info(imei)
+async def check_imei(imei: IMEI, user: User = Depends(get_current_user)) -> IMEIResponse:
+    result = await get_imei_info(imei)
+    if result.get("errors"):
+        return IMEIResponse(status="error", error=result["errors"])
+    else:
+        return IMEIResponse(status="successful", data=result['properties'])
