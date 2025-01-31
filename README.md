@@ -8,6 +8,7 @@
 ```bash
 pip install -r requirements.txt
 ```
+Если Linux, то желательно ещё и `pip install uvloop`
 
 ### 2️⃣ Настроить `.env`
 - Переименуйте `.env.example` в `.env` и укажите нужные параметры:
