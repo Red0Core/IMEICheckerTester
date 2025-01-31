@@ -1,4 +1,4 @@
-from backend.imei_checker import IMEI, mock_get_imei_info
+from services.imei_checker import IMEI, mock_get_imei_info
 from unittest.mock import patch
 from fastapi.testclient import TestClient
 

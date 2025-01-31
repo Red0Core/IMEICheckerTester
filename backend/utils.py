@@ -1,7 +1,7 @@
 import bcrypt
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from .database import User
+from database import User
 
 def get_user_or_404(user_id: int, db: Session):
     user = db.query(User).filter(User.id == user_id).first()

@@ -1,8 +1,8 @@
 from fastapi import Depends, APIRouter
-from ..database import get_db, User
+from database import get_db, User
 from sqlalchemy.orm import Session
 from .auth import get_current_user
-from ..imei_checker import IMEI, get_imei_info
+from services.imei_checker import IMEI, get_imei_info
 
 router = APIRouter()
 

@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from backend.main import app
-from backend.database import Base, get_db, User
+from database import Base, get_db, User
 from backend.routers.auth import get_password_hash
 
 # Настройка тестовой базы данных
