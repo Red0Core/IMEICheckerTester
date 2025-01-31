@@ -1,7 +1,7 @@
 import httpx
 from pydantic import BaseModel, field_validator, Field
-import os
 from logger import logger
+import os
 
 API_KEY_IMEI = os.getenv("API_KEY_IMEI")
 

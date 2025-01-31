@@ -12,10 +12,11 @@ pip install -r requirements.txt
 ### 2️⃣ Настроить `.env`
 - Переименуйте `.env.example` в `.env` и укажите нужные параметры:
 ```ini
-DATABASE_URL=your-database-url-sqlite
-TOKEN_BOT=your-telegram-bot-token
-SECRET_KEY=your-jwt-secret
-ALGORITHM=your-algorithm
+DATABASE_URL="your-database-url-sqlite"
+TOKEN_BOT="your-telegram-bot-token"
+SECRET_KEY="your-jwt-secret"
+ALGORITHM="your-algorithm"
+API_KEY_IMEI="your-api-key"
 ```
 
 ### 3️⃣ Запустить приложение
@@ -68,6 +69,8 @@ POST /api/check-imei
 | `/start`     | Приветственное сообщение               |
 | `/imei <IMEI>` | Проверить устройство по IMEI           |
 | `/add_wl <ID>` | Добавить пользователя в белый список для админа |
+
+Админы добавляются в tg_bot/config.py
 
 ---
 
